@@ -187,7 +187,7 @@ function findSwitchCandidates(devices,entities,states={}){
 
 
 
-const DASHBOARD_VERSION = "0.1.21-dev.3";
+const DASHBOARD_VERSION = "0.1.21";
 
 class CiscoCatalystSwitchCard extends HTMLElement {
   static getConfigForm() {
