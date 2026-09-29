@@ -2,6 +2,8 @@
 
 A Home Assistant dashboard card that restores a switch-wide operational view for Cisco Catalyst physical ports exposed by the `cisco_catalyst` integration.
 
+![Cisco Catalyst Port Dashboard](docs/images/dashboard.png)
+
 > [!IMPORTANT]
 > This project is under active development. Test administrative and PoE controls carefully before relying on the card for production switch management. VLAN configuration writes are not implemented.
 
