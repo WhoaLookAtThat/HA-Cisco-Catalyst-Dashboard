@@ -36,15 +36,19 @@ Each project document should capture, when applicable:
 
 Not every heading needs content on day one. The important rule is that substantial project-specific detail goes into the project document rather than expanding the high-level roadmap.
 
-## Current completion gate — initial 0.1 integration
+## Initial public-release gate — complete
 
-Before starting the larger roadmap, finish the current five-step validation/release sequence:
+The initial integration/dashboard validation and publication gate is complete:
 
-1. Complete the current integration write-validation cycle.
-2. Complete SNMP trap/inform and reconfiguration validation.
-3. Perform final Cisco operational cleanup and persist intended switch configuration.
-4. Run one final Home Assistant acceptance pass.
-5. Complete repository/documentation cleanup and promote the validated integration to `main`.
+- the Cisco Catalyst integration v0.1.0 public release is available;
+- the Cisco Catalyst Port Dashboard v0.1.21 public release is available;
+- the validated Catalyst 3650 baseline completed live Home Assistant acceptance;
+- both projects were migrated to fresh public repositories without carrying the private development history forward;
+- normal CI is green on the public repositories;
+- dashboard HACS validation passes publicly;
+- Home Assistant installation/update can now use the public/HACS-managed paths rather than the private-development workflow.
+
+The larger roadmap below is therefore no longer blocked on the initial 0.1 release sequence.
 
 ## Roadmap
 
