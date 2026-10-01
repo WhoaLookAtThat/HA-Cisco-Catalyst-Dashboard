@@ -45,7 +45,12 @@ If the project is public but has not yet been added to the HACS default reposito
 
 1. Open **HACS**.
 2. Open the HACS menu and choose **Custom repositories**.
-3. Enter the GitHub repository URL for this project.
+3. Enter this repository URL:
+
+   ```text
+   https://github.com/WhoaLookAtThat/HA-Cisco-Catalyst-Dashboard
+   ```
+
 4. Select **Dashboard** as the repository type and add it.
 5. Find **Cisco Catalyst Port Dashboard** in HACS and choose **Download**.
 6. Reload the Home Assistant frontend.
