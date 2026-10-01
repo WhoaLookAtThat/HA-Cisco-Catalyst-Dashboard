@@ -2,38 +2,36 @@
 
 This document tracks the development path for the Home Assistant Cisco Catalyst Dashboard.
 
-## Stable baseline: v0.1.20
+## Current stable release: v0.1.21
 
-v0.1.20 is released and is the current stable dashboard baseline.
+v0.1.21 is the current public dashboard release.
 
-- `main` and tag `v0.1.20`: `5d90ee58547e25103ca2847af973725a0541227b`.
-- Accepted root/dist Git blob: `0efa1a5a0e0d5d6c5b32f43219896eb7e62c2dc9`.
-- Accepted installed SHA-256: `17c004bad1a9ff4295adc6d40add29dcb5960ebcdb5631ad5366a1c579a8066b`.
-- Accepted installed size: 29,579 bytes.
-- Post-merge CI passed on the release commit.
-- Live Home Assistant acceptance passed for contract-v1 rendering, 48+4 physical layout, narrow-dialog layout, keyboard/scroll behavior, read-only rejection, v2c/v3 writes, live dialog refresh, independent Port/PoE pending controls, and stable clickable controls without rerender flicker.
-- The v0.1.16 heuristic discovery/layout fallback remains intentionally available during the compatibility window.
+The release completed the current hardware/model-generalization milestone and the repository/HACS migration:
 
-HACS default-listing work remains separate from ordinary release engineering. The public replacement repository must pass HACS validation before its next stable release.
+- The dashboard now prefers dashboard contract v1 metadata for physical-port discovery, grouping, ordering, and semantic roles.
+- Adaptive smaller primary layouts, arbitrary contract-v1 physical groups, non-PoE summary suppression, and member/slot-aware port labels/order are implemented.
+- The known Catalyst 3650 48+4 environment passed the full live regression for the generalized implementation.
+- Synthetic tests cover additional layout shapes and contract cases; those are contract-compatible test cases, not claims of hardware validation.
+- The public repository is live under `WhoaLookAtThat/HA-Cisco-Catalyst-Dashboard` with fresh public history.
+- HACS validation passes in the public repository.
+- v0.1.21 is published and the normal Home Assistant installation/update path is HACS.
 
-## Current milestone: hardware/model generalization
+The v0.1.20 Catalyst 3650 acceptance remains an important historical regression baseline, and the v0.1.16 heuristic discovery/layout fallback remains intentionally available during the compatibility window.
 
-The current implementation and live regression baseline are grounded in a Catalyst 3650 48-port PoE+ layout: 48 primary ports plus four separately displayed additional ports.
+## Hardware/model support status
 
-Generalization is underway. The goal is to support additional physical layouts through explicit integration metadata while preserving the accepted 3650 behavior.
+The Catalyst 3650 48-port PoE+ layout with 48 primary ports plus four additional physical interfaces is the only currently hardware-validated dashboard target.
 
-Implemented development support now includes adaptive smaller primary groups, arbitrary contract-v1 physical groups, non-PoE summary suppression, and member/slot-aware port labels/order. These changes remain on the development branch until live regression on the known Catalyst 3650 baseline.
+The current generalization scope is complete: the dashboard renders layouts from explicit integration metadata instead of adding model-name heuristics. Other layouts covered by automated fixtures are contract-tested but should not be described as hardware-validated until real hardware or reliable field reports confirm them.
 
-Only the Catalyst 3650 development switch is currently hardware-validated. Other layouts are synthetic contract-level compatibility cases, not claims of tested hardware support. Additional hardware is not a release prerequisite; future real-model reports can promote compatible layouts from contract-tested to hardware-validated.
+Additional hardware is not a release prerequisite. Future reports can confirm or refine support for:
 
-Potential future support still includes:
+- different uplink arrangements that need explicit ordering or labels;
+- switch-stack presentation;
+- other Catalyst generations/families;
+- explicit switch-level semantic summary roles if the integration contract is extended.
 
-- Different uplink arrangements that need explicit ordering/labels.
-- More complete switch-stack presentation.
-- Other Catalyst generations/families.
-- Explicit switch-level semantic summary roles if the integration contract is extended.
-
-Model support should be driven by explicit integration metadata rather than an accumulation of dashboard-specific naming, entity-ID, or port-number heuristics.
+Model support should continue to be driven by explicit integration metadata rather than dashboard-specific naming, entity-ID, or port-number heuristics.
 
 ### Generalization design constraints
 
@@ -44,9 +42,23 @@ Model support should be driven by explicit integration metadata rather than an a
 - Hide controls/fields that are genuinely unsupported rather than displaying misleading values.
 - Prefer contract metadata over parsing user-visible names or IDs.
 - Retain the v0.1.16 compatibility path during its planned window.
-- Treat the accepted v0.1.20 48+4 layout as a regression fixture.
-- Do not invent model-specific group-order/display-name heuristics when contract v1 metadata is insufficient.
-- Do not modify the integration repository from dashboard development; document needed contract changes as versioned handoffs.
+- Treat the accepted Catalyst 3650 48+4 behavior as the live regression fixture.
+- Do not invent model-specific group-order/display-name heuristics when contract metadata is insufficient.
+- Keep integration-owned switch semantics in the integration contract rather than duplicating them in the dashboard.
+
+## Current improvement backlog
+
+These are post-generalization improvements to prioritize from real use rather than mandatory release blockers:
+
+- Better CDP/LLDP downstream-device presentation.
+- Richer traffic/error visualization.
+- Better switch-level summaries.
+- Additional accessibility refinements.
+- Mobile refinements.
+- Configuration/editor improvements.
+- Performance and live-update improvements.
+- Read-only UI polish where Home Assistant exposes enough capability information to present it cleanly.
+- Broader Catalyst model validation as additional hardware or field reports become available.
 
 ## Release engineering for future versions
 
@@ -55,24 +67,12 @@ For each future release:
 - Run unit/regression tests and build validation.
 - Keep root and `dist/` distributables identical.
 - Verify exact-HEAD CI.
-- Checksum/blob-gate the distributable before live Home Assistant installation.
 - Perform appropriate live Home Assistant acceptance for behavior changed by the release.
-- Promote the accepted development state to `main` only after validation.
+- Merge through the protected `main` branch workflow.
 - Verify post-merge CI and final artifact identity before tagging/releasing.
+- Confirm HACS validation remains green for public releases.
 
-Manual `?v=` resource query changes are a development cache workaround, not the intended HACS-managed update mechanism.
-
-## Post-generalization improvement backlog
-
-Prioritize these from real use rather than treating them as mandatory pre-release scope:
-
-- Better CDP/LLDP downstream-device presentation.
-- Richer traffic/error visualization.
-- Switch-level summaries.
-- Additional accessibility refinements.
-- Mobile refinements.
-- Configuration/editor improvements.
-- Performance and live-update improvements.
+Manual `/local/` resources and `?v=` cache-busting query strings are development/troubleshooting tools, not the intended production update mechanism. HACS is the normal installation and update path.
 
 ## Working principles
 
@@ -85,4 +85,4 @@ Prioritize these from real use rather than treating them as mandatory pre-releas
 
 ## High-level sequence
 
-**Audit layout assumptions ✅ → metadata-driven generalization ✅/in progress → synthetic contract fixtures ✅/in progress → live regression on the 48+4 baseline → release validation → ongoing improvements.**
+**Audit layout assumptions ✅ → metadata-driven generalization ✅ → synthetic contract fixtures ✅ → live Catalyst 3650 regression ✅ → public/HACS migration ✅ → v0.1.21 release ✅ → ongoing improvements.**
