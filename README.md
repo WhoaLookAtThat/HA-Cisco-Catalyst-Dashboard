@@ -169,3 +169,7 @@ Useful context for evaluating that contribution:
 - **Reproducibility:** source, tests, build/validation configuration, and distributable artifacts where applicable are kept in the repository so changes can be reviewed without requiring access to the original ChatGPT conversation.
 
 AI assistance does not imply endorsement, review, or support by OpenAI, Home Assistant, HACS, or Cisco.
+
+## Dashboard preview
+
+![Cisco Catalyst dashboard preview](docs/images/dashboard.png)
