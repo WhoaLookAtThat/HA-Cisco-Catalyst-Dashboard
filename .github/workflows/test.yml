@@ -1,0 +1,22 @@
+name: test
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run build
+      - run: node --check cisco-catalyst-switch-card.js
+      - run: cmp dist/cisco-catalyst-switch-card.js cisco-catalyst-switch-card.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-bundle
+          path: cisco-catalyst-switch-card.js
+          if-no-files-found: error
