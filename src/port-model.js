@@ -2,7 +2,7 @@ const LEGACY_ROLE_MAP = { rx: "rx_bytes", tx: "tx_bytes" };
 
 export function inferRole(entity, states = {}) {
   const explicit = states[entity.entity_id]?.attributes?.cisco_catalyst_role;
-  if (explicit) return explicit;
+  if (explicit) return explicit === "poe" && !entity.entity_id.startsWith("switch.") ? null : explicit;
   const id = entity.unique_id ?? "";
   if (id.endsWith("_link")) return "link";
   if (id.endsWith("_speed")) return "speed";
@@ -11,7 +11,7 @@ export function inferRole(entity, states = {}) {
   if (id.endsWith("_errors")) return "errors";
   if (id.endsWith("_admin")) return "admin";
   if (id.endsWith("_description")) return "description";
-  if (id.includes("_poe_")) return "poe";
+  if (entity.entity_id.startsWith("switch.") && id.includes("_poe_")) return "poe";
   return null;
 }
 
