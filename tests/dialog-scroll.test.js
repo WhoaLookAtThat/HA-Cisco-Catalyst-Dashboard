@@ -4,15 +4,19 @@ import { readFile } from "node:fs/promises";
 
 test("open port dialog refreshes state without losing scroll or control focus", async () => {
   const source=await readFile("src/cisco-catalyst-switch-card.js","utf8");
-  assert.match(source,/scheduleDialogRefresh\(force=false\)/);
+  assert.match(source,/scheduleDialogRefresh\(force=false, returnFocusControl=null\)/);
   assert.match(source,/const stateKey=JSON\.stringify\(port\)/);
   assert.match(source,/stateKey===this\._dialogStateKey/);
   assert.match(source,/this\._dialogStateKey=JSON\.stringify\(port\)/);
-  assert.match(source,/scheduleDialogRefresh\(true\)/);
+  assert.match(source,/scheduleDialogRefresh\(true,returnFocusControl\)/);
   assert.match(source,/const scrollTop=dialog\.scrollTop/);
   assert.match(source,/preserveDialogState:true/);
   assert.match(source,/dialog\.scrollTop=scrollTop/);
   assert.match(source,/focusedControl/);
+  assert.match(source,/Focus rule: an async action restores focus to its initiating logical control/);
+  assert.match(source,/returnFocusControl \?\? dialog\.querySelector\(":focus"\)/);
+  assert.match(source,/toggleEntity\(port\.entityIds\.admin,port\.adminEnabled,"admin"\)/);
+  assert.match(source,/toggleEntity\(port\.entityIds\.poe,port\.poeEnabled,"poe"\)/);
   assert.match(source,/if\(!preserveDialogState\) requestAnimationFrame/);
   assert.match(source,/this\._controlPendingEntities\?\?=new Set\(\)/);
   assert.match(source,/pending\.has\(entityId\)/);

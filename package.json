@@ -1,10 +1,17 @@
 {
   "name": "ha-cisco-catalyst-dashboard",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/*.test.js",
+    "test": "node --test",
     "build": "node scripts/build.js"
-  }
+  },
+  "description": "Home Assistant dashboard card for Cisco Catalyst physical ports",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WhoaLookAtThat/HA-Cisco-Catalyst-Dashboard.git"
+  },
+  "author": "WhoaLookAtThat"
 }
