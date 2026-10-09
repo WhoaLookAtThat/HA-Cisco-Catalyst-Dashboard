@@ -7,8 +7,17 @@ export function buildSwitchSummary(ports, switchEntities, states) {
   const poeUsed = ports.reduce((sum, p) => sum + (Number(p.poeConsumptionW) || 0), 0);
   const poeEntityId = Object.entries(switchEntities ?? {}).find(([key]) => key.endsWith("_poe_power_used"))?.[1];
   const poeState = poeEntityId ? states[poeEntityId] : undefined;
+  const poeSupported = Boolean(poeEntityId) || ports.some((p) =>
+    Boolean(p.entityIds?.poe) ||
+    p.poeEnabled != null ||
+    p.poeDetected != null ||
+    p.poeConsumptionW != null ||
+    p.poeAllocatedW != null ||
+    p.poeAvailableW != null ||
+    p.poeMaxDrawnW != null
+  );
   return {
-    total: ports.length, active, down, disabled, unknown, poePorts,
+    total: ports.length, active, down, disabled, unknown, poePorts, poeSupported,
     poeUsedW: poeState && Number.isFinite(Number(poeState.state)) ? Number(poeState.state) : poeUsed,
     poeBudgetW: poeState?.attributes?.poe_budget_w ?? null,
     poeRemainingW: poeState?.attributes?.poe_remaining_w ?? null,
