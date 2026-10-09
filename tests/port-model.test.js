@@ -34,3 +34,17 @@ test("contract v1 uses explicit roles and physical metadata instead of unique_id
   const p=buildPortModel({device:{id:"d1",name:"User visible nonsense",name_by_user:"Example Secondary AP"},entities,states,contractVersion:1});
   assert.equal(p.interfaceId,"if-10101"); assert.equal(p.interfaceName,"GigabitEthernet1/0/1"); assert.equal(p.physicalGroup,"primary"); assert.equal(p.physicalPosition,1); assert.equal(p.rxBytes,"123"); assert.equal(p.linkUp,true);
 });
+
+test("PoE power sensor cannot shadow PoE switch regardless of entity registry order", () => {
+  const poeSwitch={entity_id:"switch.port_37_poe",unique_id:"host_poe_1_37"};
+  const powerSensor={entity_id:"sensor.port_37_poe_power",unique_id:"host_poe_1_37_power"};
+  const states={
+    [poeSwitch.entity_id]:{state:"on",attributes:{cisco_catalyst_role:"poe"}},
+    [powerSensor.entity_id]:{state:"0",attributes:{poe_enabled:true}},
+  };
+  for(const entities of [[poeSwitch,powerSensor],[powerSensor,poeSwitch]]){
+    const p=buildPortModel({device:{id:"d37",name:"GigabitEthernet1/0/37"},entities,states,contractVersion:1});
+    assert.equal(p.entityIds.poe,poeSwitch.entity_id);
+    assert.equal(p.poeEnabled,true);
+  }
+});
