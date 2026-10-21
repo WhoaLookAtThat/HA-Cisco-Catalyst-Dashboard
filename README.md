@@ -23,37 +23,44 @@ A Home Assistant dashboard card that restores a switch-wide operational view for
 - A Catalyst switch represented by that integration as a parent device with physical port child devices.
 - For the currently targeted Catalyst 3650 layout, 48 primary ports plus four additional physical interfaces are supported.
 
-## Installation with HACS
+## Installation with HACS / Marketplace
 
-HACS is the preferred installation method once this repository is available through HACS.
+**Home Assistant 2026.10 and earlier:** use HACS (Home Assistant Community Store). **Home Assistant 2026.11 and later:** HACS is built into Home Assistant as **Marketplace** under **Settings → Marketplace**; no separate HACS installation is required. Existing custom repositories and installed dashboard cards migrate automatically. See the [official Marketplace migration guidance](https://hacs.netlify.app/docs/marketplace/).
 
-### HACS default repository
+HACS/Marketplace is the preferred installation method once this repository is available through the store.
 
-If this project is listed in HACS:
+### Default catalog
 
-1. Open **HACS** in Home Assistant.
+If this project is listed in the HACS/Marketplace catalog:
+
+1. Open **HACS** (2026.10 or older) or **Settings → Marketplace** (2026.11 or newer).
 2. Search for **Cisco Catalyst Port Dashboard**.
 3. Select it and choose **Download**.
 4. Reload the Home Assistant frontend when prompted.
 5. Edit a dashboard and add **Cisco Catalyst Switch Card**.
 
-### HACS custom repository
+### Custom repository (HACS / Marketplace)
 
-If the project is public but has not yet been added to the HACS default repository:
+If the project is not yet in the shared HACS/Marketplace catalog:
 
-1. Open **HACS**.
-2. Open the HACS menu and choose **Custom repositories**.
-3. Enter the GitHub repository URL for this project.
-4. Select **Dashboard** as the repository type and add it.
-5. Find **Cisco Catalyst Port Dashboard** in HACS and choose **Download**.
+1. Open **HACS** (2026.10 or older) or **Settings → Marketplace** (2026.11 or newer).
+2. Open **Custom repositories** (menu location varies by version).
+3. Enter this exact repository URL:
+
+   ```text
+   https://github.com/WhoaLookAtThat/HA-Cisco-Catalyst-Dashboard
+   ```
+
+4. Select **Dashboard** (or **Plugin**, if labeled that way in your Marketplace version) as the repository type and add it.
+5. Find **Cisco Catalyst Port Dashboard** in HACS/Marketplace and choose **Download**.
 6. Reload the Home Assistant frontend.
 7. Edit a dashboard and add **Cisco Catalyst Switch Card**.
 
-If HACS does not automatically register or refresh the frontend resource, check **Settings → Dashboards → Resources** and verify that the card's JavaScript module is present.
+If HACS/Marketplace does not automatically register or refresh the frontend resource, check **Settings → Dashboards → Resources** and verify that the card's JavaScript module is present.
 
 ## Manual installation
 
-Manual installation is useful for development, troubleshooting, or systems where HACS is not installed.
+Manual installation is useful for development, troubleshooting, or systems where the store is not being used.
 
 1. Download the root `cisco-catalyst-switch-card.js` file from the latest release/source. Make sure you save the JavaScript file itself, not a GitHub HTML page.
 2. Create this directory under your Home Assistant configuration directory if necessary:
@@ -157,7 +164,7 @@ The build writes `dist/cisco-catalyst-switch-card.js`. CI also verifies that the
 
 This project was developed with substantial assistance from **OpenAI ChatGPT, GPT-5.6 Sol**.
 
-The AI has been used as an engineering assistant for architecture, Home Assistant/HACS documentation research, implementation, tests, build/CI work, code review, and repository maintenance. Changes are committed to the repository and validated by automated tests/build checks so readers can inspect the resulting source rather than relying on AI-generated claims.
+The AI has been used as an engineering assistant for architecture, Home Assistant/HACS/Marketplace documentation research, implementation, tests, build/CI work, code review, and repository maintenance. Changes are committed to the repository and validated by automated tests/build checks so readers can inspect the resulting source rather than relying on AI-generated claims.
 
 Useful context for evaluating that contribution:
 
