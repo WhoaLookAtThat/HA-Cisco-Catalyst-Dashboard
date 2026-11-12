@@ -42,7 +42,7 @@ export function hydratePort(topology,states) {
   const link=state("link"),speed=state("speed"),errors=state("errors"),description=state("description"),admin=state("admin"),poe=state("poe");
   return {...topology,ifIndex:link?.attributes?.if_index??null,description:cleanState(description?.state)??"",
     linkUp:link?.state==="on"?true:link?.state==="off"?false:null,adminEnabled:admin?.state==="on"?true:admin?.state==="off"?false:null,speed:cleanState(speed?.state),
-    portMode:link?.attributes?.port_mode??null,accessVlan:link?.attributes?.access_vlan??null,nativeVlan:link?.attributes?.native_vlan??null,allowedVlans:link?.attributes?.allowed_vlans??null,
+    portMode:link?.attributes?.port_mode??null,accessVlan:link?.attributes?.access_vlan??null,accessVlanOperational:link?.attributes?.access_vlan_operational??null,nativeVlan:link?.attributes?.native_vlan??null,allowedVlans:link?.attributes?.allowed_vlans??null,
     poeEnabled:poe?.state==="on"?true:poe?.state==="off"?false:link?.attributes?.poe?.enabled??null,poeDetected:poe?.attributes?.device_detected??link?.attributes?.poe?.device_detected??null,
     poeConsumptionW:poe?.attributes?.power_consumption_w??link?.attributes?.poe?.consumption_w??null,poeAllocatedW:poe?.attributes?.power_allocated_w??link?.attributes?.poe?.allocated_power_w??null,
     poeAvailableW:poe?.attributes?.power_available_w??link?.attributes?.poe?.available_power_w??null,poeMaxDrawnW:poe?.attributes?.max_power_drawn_w??link?.attributes?.poe?.max_drawn_w??null,
