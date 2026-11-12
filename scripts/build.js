@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 await mkdir("dist",{recursive:true});
 const packageJson=JSON.parse(await readFile("package.json","utf8"));
 const version=packageJson.version;
-const modules=["switch-layout.js","port-model.js","switch-summary.js","entity-discovery.js","cisco-catalyst-switch-card.js"];
+const modules=["switch-layout.js","port-model.js","switch-summary.js","entity-discovery.js","vlan-review-requests.js","vlan-review-view-model.js","vlan-confirmed-request.js","cisco-catalyst-switch-card.js"];
 let output="";
 for(const name of modules){
   let source=await readFile(`src/${name}`,"utf8");
