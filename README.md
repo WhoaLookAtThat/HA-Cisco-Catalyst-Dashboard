@@ -3,15 +3,16 @@
 A Home Assistant dashboard card that restores a switch-wide operational view for Cisco Catalyst physical ports exposed by the `cisco_catalyst` integration.
 
 > [!IMPORTANT]
-> This project is under active development. Test administrative and PoE controls carefully before relying on the card for production switch management. VLAN configuration writes are not implemented.
+> This project is under active development. Test administrative, PoE and access-VLAN controls carefully before relying on the card for production switch management. Access-VLAN changes use the native Home Assistant Integration select entity and its safeguards; the Dashboard does not implement arbitrary VLAN configuration writes.
 
 ## What it provides
 
 - Ordered Catalyst 3650 48-port front-panel view plus a separate four-port additional-interface group.
 - Link/admin state, description, negotiated speed, VLAN/trunk context, and live PoE draw in compact tiles.
 - Switch summary for active/down/disabled/unknown ports and PoE usage/budget.
-- Click/tap port detail dialog with interface, VLAN, PoE, traffic, error/discard, MAC/IP, CDP, and LLDP information.
+- Click/tap port detail dialog with interface, VLAN, PoE, traffic, error/discard, MAC, CDP, and LLDP information, including separate learned endpoint IPs, CDP neighbor IPs, and deduplicated observed port IPs.
 - Port Enabled and PoE Enabled controls through normal Home Assistant `switch.turn_on` / `switch.turn_off` services.
+- Access VLAN selection through the native Integration entity where supported; do not confuse observed CDP neighbor IP addresses with ARP-correlated endpoint IPs.
 - Live entity-state updates without re-fetching the device/entity registries on every Home Assistant state update.
 - Visual card configuration form with a Catalyst device selector.
 - Responsive 24/12/4-column layouts while preserving sequential physical order.
