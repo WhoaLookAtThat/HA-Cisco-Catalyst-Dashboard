@@ -1,3 +1,13 @@
+export function shortInterfaceName(name) {
+  return String(name??"").replace(
+    /^(GigabitEthernet|TenGigabitEthernet|FortyGigabitEthernet|TwentyFiveGigE)(?=\d)/,
+    prefix=>({
+      GigabitEthernet:"Gi",TenGigabitEthernet:"Te",
+      FortyGigabitEthernet:"Fo",TwentyFiveGigE:"Twe",
+    })[prefix]
+  );
+}
+
 const PRIMARY = /^GigabitEthernet1\/0\/(\d+)$/;
 const ADDITIONAL = /^GigabitEthernet1\/1\/(\d+)$/;
 
