@@ -272,7 +272,7 @@ function confirmedVlanRequest(reviewRequest, reviewResponse, livePort, selectedV
 
 
 
-const DASHBOARD_VERSION = "0.1.24";
+const DASHBOARD_VERSION = "0.2.0";
 
 class CiscoCatalystSwitchCard extends HTMLElement {
   static getConfigForm() {
