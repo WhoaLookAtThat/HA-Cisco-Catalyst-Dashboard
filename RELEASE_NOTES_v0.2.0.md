@@ -25,10 +25,10 @@ If manually adding a resource, register the installed JavaScript file as **JavaS
 
 Tested primarily with a Cisco Catalyst 3650 and Home Assistant Core 2026.11.1; other device layouts require validation.
 
-## Known limitations and next-release work
+## Known limitations
 
-- Counts of learned endpoint, CDP and observed IPv4 addresses differ by design. A CDP-advertised address is an observation, not proof of current IP reachability.
-- Proactive **Network Health** summaries, actionable informational/investigate/urgent findings, and discard-rate warnings are planned for a subsequent release (#91), **not present here**.
-- Full native entity-state display of IP address strings is deferred in the companion Integration (#83); the Dashboard already shows observed address values.
-- IPv6 discovery and optional external inventory integration remain future work.
-- This is a public **beta**, not a claim of universal Cisco model support or production readiness. Review controls and snapshots before making changes.
+- Learned endpoint, CDP neighbor and observed port IPv4 addresses come from different discovery sources. Their counts may differ even when each reading is correct. A CDP-advertised IP address is not proof that the device is currently reachable.
+- The Dashboard displays address values from available discovery data, but companion Integration address-count sensor states do not directly show the address string; those lists are exposed in sensor attributes.
+- Traffic, error and discard values are observational, often cumulative counters. A high historical discard total by itself does not establish an active network problem. The card does not perform automated network-health analysis or send anomaly alerts.
+- IPv6 endpoint/neighbor correlation and enrichment from external discovery inventories are not provided in this release.
+- The front-panel layout and data have primarily been tested with the Catalyst 3650. Other switch models, supported entities, and firmware may behave differently. This release is a public beta, not a guarantee of production readiness.
